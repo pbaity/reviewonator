@@ -5,7 +5,7 @@
 # Every option other than --bin-dir, --force and --local is passed to `reviewonator setup`.
 set -eu
 
-REPOSITORY="johniak/reviewonator"
+REPOSITORY="pbaity/reviewonator"
 DOWNLOAD_URL=${REVIEWONATOR_DOWNLOAD_URL:-"https://github.com/$REPOSITORY/releases/latest/download"}
 BIN_DIR=${REVIEWONATOR_BIN_DIR:-"$HOME/.local/bin"}
 LOCAL_BUILD=false

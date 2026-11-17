@@ -65,7 +65,7 @@ describe("compiled executable installed by the install script", () => {
 
     expect((await response.json()).notice).toMatchObject({
       latest: "99.0.0",
-      releaseUrl: "https://github.com/johniak/reviewonator/releases/tag/v99.0.0",
+      releaseUrl: "https://github.com/pbaity/reviewonator/releases/tag/v99.0.0",
     });
   }, 30_000);
 });

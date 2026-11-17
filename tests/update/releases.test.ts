@@ -25,7 +25,7 @@ describe("GitHub release source", () => {
 
     expect(await new GhReleaseSource(runner).latestVersion()).toBe("0.8.0");
     expect(runner.calls).toEqual([
-      { command: "gh", args: ["api", "repos/johniak/reviewonator/releases/latest", "--jq", ".tag_name"] },
+      { command: "gh", args: ["api", "repos/pbaity/reviewonator/releases/latest", "--jq", ".tag_name"] },
     ]);
   });
 
@@ -53,7 +53,7 @@ describe("GitHub release source", () => {
     expect(runner.calls).toEqual([{
       command: "gh",
       args: [
-        "release", "download", "v0.8.0", "--repo", "johniak/reviewonator",
+        "release", "download", "v0.8.0", "--repo", "pbaity/reviewonator",
         "--pattern", "a.tar.gz", "--pattern", "a.tar.gz.sha256", "--dir", "/tmp/target", "--clobber",
       ],
     }]);
@@ -70,6 +70,6 @@ describe("GitHub release source", () => {
   });
 
   it("links the release notes of a version", () => {
-    expect(releaseUrl("0.8.0")).toBe("https://github.com/johniak/reviewonator/releases/tag/v0.8.0");
+    expect(releaseUrl("0.8.0")).toBe("https://github.com/pbaity/reviewonator/releases/tag/v0.8.0");
   });
 });

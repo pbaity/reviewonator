@@ -42,7 +42,7 @@ async function checkerFixture(
 const notice08 = {
   current: "0.7.0",
   latest: "0.8.0",
-  releaseUrl: "https://github.com/johniak/reviewonator/releases/tag/v0.8.0",
+  releaseUrl: "https://github.com/pbaity/reviewonator/releases/tag/v0.8.0",
 };
 
 describe("UpdateChecker", () => {

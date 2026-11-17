@@ -1,6 +1,7 @@
 import type { CommandRunner } from "../platform/command";
 
-export const REPOSITORY = "johniak/reviewonator";
+// This fork has no releases, so `reviewonator update` fails here instead of pulling upstream over it.
+export const REPOSITORY = "pbaity/reviewonator";
 
 export interface ReleaseSource {
   latestVersion(signal?: AbortSignal): Promise<string>;
