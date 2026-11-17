@@ -114,7 +114,8 @@
 
 /* Slate: cool neutral surfaces with a blue accent. Values come from the MIT-licensed
    @primer/primitives 10.3.4 light and dark themes; translucent ones are composited onto the
-   surface they sit on (word highlights onto their line), so every token stays opaque.
+   surface they sit on (word highlights onto their line), so tokens stay opaque, except the dark
+   diff backgrounds, which keep GitHub's translucent values (see the note above them).
    Both attributes sit on one element, so a nested element carrying them re-scopes the tokens
    for its subtree; the colour theme previews rely on that. */
 [data-palette="slate"][data-theme="light"] {
@@ -203,13 +204,16 @@
   --pc-warning-subtle: #272215;
   --pc-info-subtle: #111D2E;
 
-  --pc-diff-add-bg: #12261E;
-  --pc-diff-del-bg: #25181C;
-  --pc-diff-add-word-bg: #1D572D;
-  --pc-diff-del-word-bg: #792F2E;
+  /* Diff backgrounds stay translucent, exactly as GitHub ships them. Chrome on macOS blends
+     translucent colours in the display's colour space, so a value pre-flattened in sRGB comes
+     out visibly darker than GitHub's on a non-sRGB monitor. */
+  --pc-diff-add-bg: #2EA04326;
+  --pc-diff-del-bg: #F851491A;
+  --pc-diff-add-word-bg: #2EA04366;
+  --pc-diff-del-word-bg: #F8514966;
   --pc-diff-hunk-bg: #111D2E;
-  --pc-diff-add-gutter: #1C4428;
-  --pc-diff-del-gutter: #542426;
+  --pc-diff-add-gutter: #3FB9504D;
+  --pc-diff-del-gutter: #F851494D;
   --pc-diff-gutter: #0D1117;
   --pc-diff-selection: #272215;
   --pc-code-fg: #F0F6FC;
@@ -746,6 +750,11 @@ textarea:focus { border-color: var(--pc-accent); }
 [data-palette="slate"] .diff-surface diffs-container {
   --diffs-fg-number-addition-override: var(--pc-fg-default);
   --diffs-fg-number-deletion-override: var(--pc-fg-default);
+  /* Slate's diff colours are GitHub's, already flattened, so show them unblended. */
+  --pc-change-line-mix-light: 0%;
+  --pc-change-line-mix-dark: 0%;
+  --pc-change-number-mix-light: 0%;
+  --pc-change-number-mix-dark: 0%;
 }
 
 .diff-comment-trigger {

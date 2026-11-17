@@ -5,6 +5,8 @@ import {
   type FileDiffMetadata,
 } from "@pierre/diffs";
 import { FileDiff } from "@pierre/diffs/react";
+import "../syntaxThemes";
+import type { SyntaxThemeName } from "../syntaxThemes";
 import {
   AlignJustify,
   Check,
@@ -415,6 +417,22 @@ export function buildExpandableDiff(file: FileDiffMetadata, context: FileContext
   }
 }
 
+// @pierre/diffs blends a changed line's colour into the background (80% background in dark mode),
+// so a palette's exact diff colours come out much fainter. A palette that wants its colours used
+// as is sets the --pc-change-*-mix-* variables to 0%; the fallbacks are the library's own values,
+// so other palettes look unchanged. Hovered lines keep the library's hover mix. The CSS lands in
+// the library's last cascade layer inside the diff's shadow root, so it beats the library's rules.
+const changedLineMixCSS = `
+[data-line-type^="change-"]:not([data-hovered]):where([data-line], [data-no-newline]) {
+  --mix-light: var(--pc-change-line-mix-light, 88%);
+  --mix-dark: var(--pc-change-line-mix-dark, 80%);
+}
+[data-line-type^="change-"]:not([data-hovered]):where([data-gutter-buffer], [data-column-number]) {
+  --mix-light: var(--pc-change-number-mix-light, 91%);
+  --mix-dark: var(--pc-change-number-mix-dark, 85%);
+}
+`;
+
 function RenderedFileDiff({
   file,
   annotations,
@@ -448,7 +466,7 @@ function RenderedFileDiff({
       fileDiff={file}
       options={{
         themeType: theme,
-        theme: { light: "github-light", dark: "github-dark" },
+        theme: { light: "reviewonator-github-light", dark: "reviewonator-github-dark" } satisfies Record<string, SyntaxThemeName>,
         diffStyle,
         diffIndicators: "classic",
         hunkSeparators: "line-info",
@@ -457,6 +475,7 @@ function RenderedFileDiff({
         disableFileHeader: true,
         enableGutterUtility: true,
         lineHoverHighlight: "both",
+        unsafeCSS: changedLineMixCSS,
       }}
       lineAnnotations={annotations}
       renderGutterUtility={(getHoveredLine) => (
